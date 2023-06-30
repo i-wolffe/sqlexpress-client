@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Select from 'react-select'
+import axios from 'axios'
 import { BsEyeSlash,BsEye } from 'react-icons/bs'
 
 let selectAll = (e) => {
@@ -16,39 +17,86 @@ export class Login extends Component {
       role: '',
       password: '',
       showPassword: false,
+      showError: false,
       user: {}
     };
   }
   updateEmail = (e) => {
     this.setState({
-      email:e.target.value
+      email:e.target.value,
+      showError : false
     })
   }
   updateRole = (e) => { // Different because it comes from a react-Select input
     this.setState({
-      role:e.value
+      role:e.value,
+      showError : false
     })
   }
   updatePassword = (e) => {
     this.setState({
-      password:e.target.value
+      password:e.target.value,
+      showError : false
     })
   }
   togglePassword = (value) => {
     this.setState({
-      showPassword : value
+      showPassword : value,
+      showError : false
     })  
   }
-  fetchUser = async (params)  => {
-    // user from the DB with post for security
+  validateData = async () => {
+    // First verify if email
+    let str = this.state.email
+    if (str.includes('@')) {
+      let at = str.indexOf('@')
+      str = str.slice(0,at)
+      if (str.indexOf('.')) {
+        let str = this.state.password
+        if (Boolean(str.match(/[^A-Za-z0-9]/g))) {
+          return true // Valid formats
+        }
+      }
+    }; return false   // any condition is not fullfiled
+  }
+  fetchUser = async (e) => {
+    await axios.post('http://127.0.0.1/login',[this.state])
+    .then(response => {
+      console.log(response)
+      this.setState({
+        user: response,
+        showError: false
+      })
+    })
+    .catch(ex => {
+      console.warn("Display credential Missmatch")
+      this.setState({
+        user: {},
+        showError: true
+      })
+    })
+  }
+  handleSubmit = (e)  => {
+    e.preventDefault()
+    // this.setState({ showError : false })  
+    this.validateData().then(res => {
+      if (res) {
+        // Send Query
+        console.log('Ready for query')
+        this.fetchUser(e)
+      } else {
+        console.log('Display wrong data format')
+        this.setState({ showError : true }) 
+      }
+    })
   }
   render() {
     return (
       <div>
-        <h2>Login</h2>
+        <h2>Who are you?</h2>
         <div >
-          <form className="login-card" action="">
-            <h3 className="login-card-title">Title</h3>
+          <form className="login-card">
+            <h3 className="login-card-title">Please enter your credentials</h3>
             <div>
               <label htmlFor="role-sleector" id="role-label">Area:</label>
               <Select
@@ -65,19 +113,29 @@ export class Login extends Component {
             </div>
             <div>
               <label htmlFor="email-input" id="email-label">E-mail:</label>
-              <input onClick={selectAll} type="email" id="email-input" 
+              <input onClick={selectAll} type="text" id="email-input" placeholder="email@domain.com"
                 autoComplete="off" required={true} onChange={this.updateEmail}/>
             </div>
             <div>
               <label htmlFor="password-input" id="email-label">Password:</label>
               <div className="flex">
-              <input onClick={selectAll} type={this.state.showPassword ? "text" : "password"} id="password-input" 
-                autoComplete="off" required={true} onChange={this.updatePassword}/>
+                <input type={this.state.showPassword ? "text" : "password"} id="password-input"  placeholder="Enter your password..."
+                  autoComplete="off" required={true} onChange={this.updatePassword}/>
                 <span className="toggle" onClick={() => this.togglePassword(!this.state.showPassword)}>
                    {this.state.showPassword ? <BsEyeSlash/> : <BsEye /> }
                 </span>
               </div>
             </div>
+            <div>
+              <button className="submit" onClick={this.handleSubmit}>Log in</button>
+            </div>
+            {this.state.showError
+            ?
+              <div className="errorMessage">
+                <p >** Whoops! there seems to be something wrong with your credentials.</p>
+                <p >Please verify them and try again</p>
+              </div>
+            : null }
           </form>
         </div>
       </div>

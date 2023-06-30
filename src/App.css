@@ -106,6 +106,10 @@ span.toggle {
   border-radius: 4px;
 }
 
+span.toggle:hover {
+  background-color: #BBB;
+}
+
 label { 
   text-align: start;
   justify-content: left;
@@ -129,13 +133,13 @@ input {
   outline-style: solid;
   outline-color: #DDD;
 }
-input[type=email]:focus, input[type=password]:focus{
+input[type=text]:focus, input[type=password]:focus{
   outline-width: 2px !important;
   outline-style: solid;
   outline-color: #2684FF;
   color: #333333 !important;
 }
-input[type=email]:hover, input[type=password]:hover{
+input[type=text]:hover, input[type=password]:hover{
   outline-color: #AAA;
   color: #333333 !important;
 }
@@ -143,3 +147,22 @@ input[type=email]:hover, input[type=password]:hover{
 input::selection { background:#D3D3D3; color: #222;}
 input::-moz-selection { background:#D3D3D3; color: #222;}
 input::-webkit-selection { background:#D3D3D3; color: #222;}
+
+
+button.submit {
+  margin: 1rem 0rem;
+  min-height: 24px;
+  padding: 0.5rem;
+  font-size: large;
+  border-radius: 8px;
+  border: none;
+}
+button.submit:hover {
+  background-color: #BBB;
+}
+
+.errorMessage > p {
+  font-size: small;
+  text-align: left;
+  color: #AA0000;
+}
