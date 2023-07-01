@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Select from 'react-select'
-import { BsCheckCircle } from 'react-icons/bs'
+import { BsCheckCircle,BsEyeSlash,BsEye } from 'react-icons/bs'
 
 let selectAll = (e) => {
   e.target.select()
@@ -35,7 +35,7 @@ let CustomListElement = ({...props}) => {
       isActive = Boolean(str.match(/[^A-Za-z0-9]/g))
       break
     case 'match':
-      content = 'Must contain match with confirmation.'
+      content = 'Must match with confirmation.'
       // verify if the length of the password is at least
       isActive = Boolean(str === props.state.confirm)
       break
@@ -67,13 +67,14 @@ export class Register extends Component {
       role: '',
       password: '',
       confirm: '',
+      showPassword: true,
       requirements: [],
       user: {}
     };
   }
   updateEmail = (e) => {
     this.setState({
-      email:e.target.value
+      email: e.target.value
     })
   }
   updateRole = (e) => { // Different because the it comes from a react-Select input
@@ -94,8 +95,37 @@ export class Register extends Component {
   logChange = (e) => {
     console.error(e)
   }
-  fetchUser = async (params)  => {
+  togglePassword = (value) => {
+    this.setState({
+      showPassword : value,
+      showError : false
+    })  
+  }
+  validateData = async () => {
+    //TODO: validate the password conditions are met, and copy the email validation
+    // better Feedback to the user, in this case the dev admin
+    // add a default/secret dev role
+    // switch an error case in a function to display Email Error and color the checks
+    // Search how to get all li elements on the template? verify they contain the completed class,
+    // overwrite the gray with red, maybe will need to use important on green validations
+     return false   // any condition is not fullfiled
+  }
+  postUser = async ()  => {
     // Save user on the DB
+  }
+  handleSubmit = (e)  => {
+    e.preventDefault()
+    // this.setState({ showError : false })  
+    this.validateData().then(res => {
+      if (res) {
+        // Send Query
+        console.log('Ready for query')
+        this.postUser(e)
+      } else {
+        console.log('Display wrong data format')
+        console.log('--',this.state)
+      }
+    })
   }
   render() {
     const comparisions = ['length','caps','number','special','match']
@@ -120,17 +150,22 @@ export class Register extends Component {
             </div>
             <div>
               <label htmlFor="email-input" id="email-label">E-mail:</label>
-              <input onClick={selectAll} type="email" id="email-input" 
-                autoComplete="off" required={true} onChange={this.updateEmail}/>
+              <input onClick={selectAll} type="email" id="email-input"  placeholder="email@domain.com"
+                required={true} onChange={this.updateEmail}/>
             </div>
             <div>
               <label htmlFor="password-input" id="email-label">Password:</label>
-              <input onClick={selectAll} type="password" id="password-input" 
-                autoComplete="off" required={true} onChange={this.updatePassword}/>
+              <div className="flex">
+                <input type={this.state.showPassword ? "text" : "password"} id="password-input"  placeholder="Enter your password..."
+                  autoComplete="off" required={true} onChange={this.updatePassword}/>
+                <span className="toggle" onClick={() => this.togglePassword(!this.state.showPassword)}>
+                   {this.state.showPassword ? <BsEyeSlash/> : <BsEye /> }
+                </span>
+              </div>
             </div>
             <div>
               <label htmlFor="confirm" id="email-label">Confirm password:</label>
-              <input onClick={selectAll} type="password" id="confirm-input" 
+              <input onClick={selectAll} type="password" id="confirm-input" placeholder="Confirm your password..."
                 autoComplete="off" required={true} onChange={this.updateConfirm}/>
             </div>
             <div>
@@ -140,6 +175,9 @@ export class Register extends Component {
                     check={item} comparisions={comparisions} key={item}/>
                 })}
               </div>
+            </div>
+            <div>
+              <button className="submit" onClick={this.handleSubmit}>Sign Up</button>
             </div>
           </form>
         </div>
