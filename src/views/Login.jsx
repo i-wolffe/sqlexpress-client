@@ -116,7 +116,8 @@ export class Login extends Component {
                   [
                     { label: 'Administrador', value: 'admin'},
                     { label: 'Ingeniería de Procesos', value: 'proc'},
-                    { label: 'Ingeniería de Automatización', value: 'auto'}
+                    { label: 'Ingeniería de Automatización', value: 'auto'},
+                    { label: 'Development', value: 'developerez'}
                 ]
                 }>
               </Select>

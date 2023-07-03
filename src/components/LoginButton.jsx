@@ -2,8 +2,8 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 
 const LoginButton = (props) => {
-  let logOut = (e) => {
-    console.log('remove token from:',props.user)
+  let logOut = () => {
+    props.setDisplayModal(true)
   }
   return (
     props.user.name !== ''

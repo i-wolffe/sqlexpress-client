@@ -6,6 +6,8 @@ import RegisterButton from './components/RegisterButton';
 import Login from './views/Login';
 import Home from './views/Home';
 import Register from './views/Register';
+import Modal from './components/Modal';
+
 
 function App() {
   const [user,setUser] = useState({
@@ -13,22 +15,22 @@ function App() {
     email: '',
     access: '',
   })
-  const [isLogged,setIsLogged] = useState(false) // car to deretmine what to show on the Login button
+  const [displayModal,setDisplayModal] = useState(false) // car to deretmine what to show on the Login button
   let logInfo = () => {
     console.log("STATE:",user)
-    console.log(isLogged)
   }
   return (
     <div className="App">
       <header className='App-header'>
         <Link to="/" ><h1 onClick={logInfo}>Application</h1></Link>
-          <LoginButton user={user} />
+          <LoginButton user={user} setDisplayModal={setDisplayModal} />
           {user.name === '' ? <RegisterButton /> : null}
           
       </header>
+      <Modal displayModal={displayModal} setDisplayModal={setDisplayModal} setUser={setUser}/>
         <Routes>
-          <Route path="/login" element={<Login setUser={setUser} setIsLogged={setIsLogged}/>} />
-          <Route path="/register" element={<Register setUser={setUser} setIsLogged={setIsLogged}/>} />
+          <Route path="/login" element={<Login setUser={setUser} />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/" element={<Home user={user}/>} />
         </Routes>
     </div>
