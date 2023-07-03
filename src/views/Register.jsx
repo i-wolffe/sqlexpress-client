@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Select from 'react-select'
+import axios from 'axios'
 import { BsCheckCircle,BsEyeSlash,BsEye } from 'react-icons/bs'
 
 let selectAll = (e) => {
@@ -70,6 +71,8 @@ export class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      name: '',
+      lastname: '',
       email: '',
       role: '',
       password: '',
@@ -79,6 +82,18 @@ export class Register extends Component {
       requirements: [],
       user: {}
     };
+  }
+  updateName = (e) => {
+    this.setState({
+      name: e.target.value,
+      showError: 0
+    })
+  }
+  updateLastName = (e) => {
+    this.setState({
+      lastname: e.target.value,
+      showError: 0
+    })
   }
   updateEmail = (e) => {
     this.setState({
@@ -142,8 +157,17 @@ export class Register extends Component {
     );
     return allWithClass.length === 5
   }
-  postUser = async ()  => {
-    // Save user on the DB
+  postUser = async (e) => {
+    await axios.post('http://127.0.0.1:4001/register',[this.state])
+    .then(response => {
+      console.log('Success!',response)
+    })
+    .catch(ex => {
+      console.warn("Display credential Missmatch", ex)
+      this.setState({
+        showError: 1
+      })
+    })
   }
   handleSubmit = (e)  => {
     e.preventDefault()
@@ -177,6 +201,16 @@ export class Register extends Component {
         <h2>Create User</h2>
         <div >
           <form className="login-card" action="">
+            <div>
+              <label htmlFor="name-input" id="name-label">Name:</label>
+              <input onClick={selectAll} type="name" id="name-input"  placeholder="John..."
+                required={true} onChange={this.updateName}/>
+            </div>
+            <div>
+              <label htmlFor="lastName-input" id="lastName-label">Last Name:</label>
+              <input onClick={selectAll} type="lastName" id="lastName-input"  placeholder="Doe..."
+                required={true} onChange={this.updateLastName}/>
+            </div>
             <div>
               <label htmlFor="role-sleector" id="role-label">Area:</label>
               <Select
