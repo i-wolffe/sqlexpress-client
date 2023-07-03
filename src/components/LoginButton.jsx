@@ -2,10 +2,19 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 
 const LoginButton = (props) => {
+  let logOut = (e) => {
+    console.log('remove token from:',props.user)
+  }
   return (
-    <div>
-      <Link to="/login"><span className="Login-btn">{ props.isLogged ? 'Log out' : 'Log in' }</span></Link>
-    </div>
+    props.user.name !== ''
+    ? 
+      <div>
+        <span className="Login-btn" onClick={logOut}>Log out</span>
+      </div>
+    : 
+      <div>
+        <Link to="/login"><span className="Login-btn">Log in</span></Link>
+      </div>
   )
 }
 

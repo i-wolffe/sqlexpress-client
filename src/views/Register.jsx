@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Select from 'react-select'
 import axios from 'axios'
+import { Navigate } from 'react-router-dom'
 import { BsCheckCircle,BsEyeSlash,BsEye } from 'react-icons/bs'
 
 let selectAll = (e) => {
@@ -79,7 +80,7 @@ export class Register extends Component {
       confirm: '',
       showPassword: true,
       showError : false,
-      requirements: [],
+      navigate: false,
       user: {}
     };
   }
@@ -128,6 +129,13 @@ export class Register extends Component {
       showError : 0
     })  
   }
+  letsGo = (success) => {
+    alert(success)
+    this.setState({
+      navigate: true
+    })
+    // blank every input field
+  }
   validateData = async () => {
     //TODO: validate the password conditions are met, and copy the email validation
     // better Feedback to the user, in this case the dev admin
@@ -161,9 +169,10 @@ export class Register extends Component {
     await axios.post('http://127.0.0.1:4001/register',[this.state])
     .then(response => {
       console.log('Success!',response)
+      this.letsGo('User registered sucessfully')
     })
     .catch(ex => {
-      console.warn("Display credential Missmatch", ex)
+      console.warn("DB ERROR Missmatch", ex)
       this.setState({
         showError: 1
       })
@@ -178,6 +187,7 @@ export class Register extends Component {
         if (res === true) {
           // Send Query
           console.log('Ready for query')
+          console.warn(this.state)
           this.postUser(e)
         } else {
           console.log('Display reqs error')
@@ -201,15 +211,16 @@ export class Register extends Component {
         <h2>Create User</h2>
         <div >
           <form className="login-card" action="">
+            {this.state.navigate ?  <Navigate to="/" replace={true} />  : null }
             <div>
               <label htmlFor="name-input" id="name-label">Name:</label>
               <input onClick={selectAll} type="name" id="name-input"  placeholder="John..."
-                required={true} onChange={this.updateName}/>
+                autoComplete="off" required={true} onChange={this.updateName}/>
             </div>
             <div>
               <label htmlFor="lastName-input" id="lastName-label">Last Name:</label>
               <input onClick={selectAll} type="lastName" id="lastName-input"  placeholder="Doe..."
-                required={true} onChange={this.updateLastName}/>
+                autoComplete="off" required={true} onChange={this.updateLastName}/>
             </div>
             <div>
               <label htmlFor="role-sleector" id="role-label">Area:</label>
@@ -220,7 +231,8 @@ export class Register extends Component {
                   [
                     { label: 'Administrador', value: 'admin'},
                     { label: 'Ingeniería de Procesos', value: 'proc'},
-                    { label: 'Ingeniería de Automatización', value: 'auto'}
+                    { label: 'Ingeniería de Automatización', value: 'auto'},
+                    { label: 'Desarrollo', value: 'developerez'}
                 ]
                 }>
               </Select>
@@ -228,7 +240,7 @@ export class Register extends Component {
             <div>
               <label htmlFor="email-input" id="email-label">E-mail:</label>
               <input onClick={selectAll} type="email" id="email-input"  placeholder="email@domain.com"
-                required={true} onChange={this.updateEmail}/>
+                autoComplete="off" required={true} onChange={this.updateEmail}/>
             </div>
             <div>
               <label htmlFor="password-input" id="email-label">Password:</label>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Select from 'react-select'
 import axios from 'axios'
+import { Navigate } from 'react-router-dom'
 import { BsEyeSlash,BsEye } from 'react-icons/bs'
 
 let selectAll = (e) => {
@@ -18,6 +19,7 @@ export class Login extends Component {
       password: '',
       showPassword: false,
       showError: false,
+      navigate: false,
       user: {}
     };
   }
@@ -62,11 +64,18 @@ export class Login extends Component {
   fetchUser = async (e) => {
     await axios.post('http://127.0.0.1:4001/login',[this.state])
     .then(response => {
-      console.log(response)
-      this.setState({
-        user: response,
-        showError: false
-      })
+      if (response.data.error === 404) {
+        console.log()
+        this.setState({ user: {}, showError: true })
+      } else {
+        // console.log(response.data)
+        // console.log(response.data[0])
+        this.setState({
+          user: response.data[0],
+          navigate: true
+        })
+        this.props.setUser(response.data[0])
+      }
     })
     .catch(ex => {
       console.warn("Display credential Missmatch")
@@ -96,6 +105,7 @@ export class Login extends Component {
         <h2>Who are you?</h2>
         <div >
           <form className="login-card">
+            {this.state.navigate ?  <Navigate to="/" replace={true} />  : null }
             <h3 className="login-card-title">Please enter your credentials</h3>
             <div>
               <label htmlFor="role-sleector" id="role-label">Area:</label>
@@ -114,7 +124,7 @@ export class Login extends Component {
             <div>
               <label htmlFor="email-input" id="email-label">E-mail:</label>
               <input onClick={selectAll} type="text" id="email-input" placeholder="email@domain.com"
-                autoComplete="off" required={true} onChange={this.updateEmail}/>
+                required={true} onChange={this.updateEmail}/>
             </div>
             <div>
               <label htmlFor="password-input" id="email-label">Password:</label>

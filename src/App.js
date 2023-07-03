@@ -14,16 +14,21 @@ function App() {
     access: '',
   })
   const [isLogged,setIsLogged] = useState(false) // car to deretmine what to show on the Login button
+  let logInfo = () => {
+    console.log("STATE:",user)
+    console.log(isLogged)
+  }
   return (
     <div className="App">
       <header className='App-header'>
-        <Link to="/" ><h1>Application</h1></Link>
-          <LoginButton isLogged={isLogged} />
-          <RegisterButton />
+        <Link to="/" ><h1 onClick={logInfo}>Application</h1></Link>
+          <LoginButton user={user} />
+          {user.name === '' ? <RegisterButton /> : null}
+          
       </header>
         <Routes>
-          <Route path="/login" element={<Login setUser={setUser} isLogged={isLogged} setIsLogged={setIsLogged}/>} />
-          <Route path="/register" element={<Register setUser={setUser} isLogged={isLogged} setIsLogged={setIsLogged}/>} />
+          <Route path="/login" element={<Login setUser={setUser} setIsLogged={setIsLogged}/>} />
+          <Route path="/register" element={<Register setUser={setUser} setIsLogged={setIsLogged}/>} />
           <Route path="/" element={<Home user={user}/>} />
         </Routes>
     </div>
