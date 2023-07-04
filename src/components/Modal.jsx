@@ -13,7 +13,7 @@ export class Modal extends Component {
     this.props.setDisplayModal(false)
   }
   endSession = () => {
-    let defaultUser = {name: '', email: '', access:''}
+    let defaultUser = { name: '', access:'', token: ''  }
     this.props.setDisplayModal(false)
     this.props.setUser(defaultUser)
   }
@@ -31,7 +31,7 @@ export class Modal extends Component {
           <span className="modal-button" onClick={this.endSession}>Continue</span>
         </div>
       </section>
-      <div className="overlay">
+      <div className="overlay" onClick={this.cancelModal}>
       </div>
       </div>
     )

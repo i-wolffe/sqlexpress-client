@@ -12,12 +12,15 @@ import Modal from './components/Modal';
 function App() {
   const [user,setUser] = useState({
     name: '',
-    email: '',
     access: '',
+    token: ''
   })
   const [displayModal,setDisplayModal] = useState(false) // car to deretmine what to show on the Login button
   let logInfo = () => {
     console.log("STATE:",user)
+  }
+  const updateUser = (userObj) => {
+    setUser(useState)
   }
   return (
     <div className="App">

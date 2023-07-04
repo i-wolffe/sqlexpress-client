@@ -21,7 +21,7 @@ h1:hover {
 .flex-end{
   display: flex;
   align-content: center;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .d-grid {
