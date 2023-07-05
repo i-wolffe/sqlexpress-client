@@ -45,9 +45,9 @@ function App() {
       </header>
       <Modal displayModal={displayModal} setDisplayModal={setDisplayModal} setUser={setUser}/>
       <Routes>
-        <Route path="/login" element={<Login setUser={setUser} />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/" element={<Home user={user}/>} />
+        <Route exact path="/login" element={<Login setUser={setUser} />} />
+        <Route exact path="/register" element={<Register />} />
+        <Route exact path="/" element={<Home user={user}/>} />
       </Routes>
     </PermissionProvider>
     </div>
