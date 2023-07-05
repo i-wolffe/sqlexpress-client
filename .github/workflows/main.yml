@@ -15,15 +15,15 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v1
 
-    - name: Build
+    - name: Deploy
       run: |
         npm install
-        npm run-script build
+        npm run deploy
       env:
         REACT_APP_API_ENDPOINT: ${{ secrets.REACT_APP_API_ENDPOINT }}
 
     - name: Deploy
-      uses: JamesIves/github-pages-deploy-action@4.0.0
+      uses: i-wolffe/github-pages-deploy-action@4.0.0
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
