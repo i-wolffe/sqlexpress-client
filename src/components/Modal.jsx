@@ -13,7 +13,7 @@ export class Modal extends Component {
     this.props.setDisplayModal(false)
   }
   endSession = () => {
-    let defaultUser = { name: '', access:'', token: ''  }
+    let defaultUser = { name: '', access:'', token: '', permissions:[]  }
     this.props.setDisplayModal(false)
     this.props.setUser(defaultUser)
   }

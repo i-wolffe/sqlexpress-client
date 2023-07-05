@@ -166,7 +166,17 @@ export class Register extends Component {
     return allWithClass.length === 5
   }
   postUser = async (e) => {
-    await axios.post('http://127.0.0.1:4001/register',[this.state])
+    const config = {
+      headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+          'Content-Type': 'application/json',
+      },
+      data: this.state
+    }
+    console.warn(config)
+    await axios.post( `${process.env.REACT_APP_API_ENDPOINT}/register`,config)
+    // await axios.post('http://127.0.0.1:4001/register',[this.state])
     .then(response => {
       console.log('Success!',response)
       this.letsGo('User registered sucessfully')

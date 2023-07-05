@@ -62,7 +62,18 @@ export class Login extends Component {
     }; return false   // any condition is not fullfiled
   }
   fetchUser = async (e) => {
-    await axios.post('http://127.0.0.1:4001/login',[this.state])
+    console.warn(process.env.REACT_APP_API_ENDPOINT)
+    const config = {
+      headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+          'Content-Type': 'application/json',
+      },
+      data: this.state
+    }
+    console.warn(config)
+    await axios.post( `${process.env.REACT_APP_API_ENDPOINT}/login`,config)
+    // await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/login`,[this.state])
     .then(response => {
       if (response.data.error === 404) {
         console.log()

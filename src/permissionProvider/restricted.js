@@ -1,5 +1,5 @@
 import React from "react"
-import usePermission from "./usePermission"
+import usePermission from "./usePermissions"
 
 // This component is meant to be used everywhere a restriction based on user permission is needed
 const Restricted = ({ to, fallback, children }) => {

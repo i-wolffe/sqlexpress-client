@@ -34,6 +34,7 @@ h1:hover {
 
 .App {
   text-align: center;
+  padding-bottom: 1rem;
 }
 .App-header {
   background-color: #282c34;
@@ -56,6 +57,7 @@ h1:hover {
 }
 .Login-btn:hover {
   color: #333;
+  cursor:default;
   border: 1.5px solid #333;
   background-color: #BBB;
 }
@@ -236,4 +238,32 @@ button.submit:hover {
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(3px);
   z-index: 1;
+}
+
+div.general-container {
+  width: 200px;
+  height: 200px;
+  background-color: cyan;
+  margin: 1rem auto;
+}
+
+div.actions {
+  margin: 0 1rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.actions > button {
+  padding: 0.3rem 0.5rem;
+  margin: 0 0.4rem;
+  background-color: #A1A1A1;
+  border-radius: 10px;
+}
+
+.actions > button:hover {
+  color: #222;
+  background-color: #515151;
+  cursor: pointer;
 }
