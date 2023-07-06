@@ -62,7 +62,7 @@ export class Login extends Component {
     }; return false   // any condition is not fullfiled
   }
   fetchUser = async (e) => {
-    console.warn(process.env.REACT_APP_API_ENDPOINT)
+    // console.warn(process.env.REACT_APP_API_ENDPOINT)
     const config = {
       headers: {
           'Access-Control-Allow-Origin': '*',
@@ -71,12 +71,12 @@ export class Login extends Component {
       },
       data: this.state
     }
-    console.warn(config)
+    // console.warn(config)
     await axios.post( `${process.env.REACT_APP_API_ENDPOINT}/login`,config)
     // await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/login`,[this.state])
     .then(response => {
       if (response.data.error === 404) {
-        console.log()
+        // console.log()
         this.setState({ user: {}, showError: true })
       } else {
         // console.log(response.data)
@@ -89,7 +89,7 @@ export class Login extends Component {
       }
     })
     .catch(ex => {
-      console.warn("Display credential Missmatch")
+      console.warn("Credential Missmatch")
       this.setState({
         user: {},
         showError: true
@@ -102,10 +102,10 @@ export class Login extends Component {
     this.validateData().then(res => {
       if (res) {
         // Send Query
-        console.log('Ready for query')
+        // console.log('Ready for query')
         this.fetchUser(e)
       } else {
-        console.log('Display wrong data format')
+        // console.log('Display wrong data format')
         this.setState({ showError : true }) 
       }
     })

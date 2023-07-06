@@ -174,15 +174,15 @@ export class Register extends Component {
       },
       data: this.state
     }
-    console.warn(config)
+    // console.warn(config)
     await axios.post( `${process.env.REACT_APP_API_ENDPOINT}/register`,config)
     // await axios.post('http://127.0.0.1:4001/register',[this.state])
     .then(response => {
-      console.log('Success!',response)
+      // console.log('Success!',response)
       this.letsGo('User registered sucessfully')
     })
     .catch(ex => {
-      console.warn("DB ERROR Missmatch", ex)
+      console.error("DB ERROR: ", ex)
       this.setState({
         showError: 1
       })
@@ -196,21 +196,21 @@ export class Register extends Component {
       if (res) {
         if (res === true) {
           // Send Query
-          console.log('Ready for query')
-          console.warn(this.state)
+          // console.log('Ready for query')
+          // console.warn(this.state)
           this.postUser(e)
         } else {
-          console.log('Display reqs error')
+          // console.log('Display reqs error')
           this.setState({
             showError : 1
           })  
         }
       } else {
-        console.log('Display wrong data format')
+        // console.log('Display wrong data format')
         this.setState({
           showError : 2
         })  
-        console.log('--',this.state)
+        // console.log('--',this.state)
       }
     })
   }

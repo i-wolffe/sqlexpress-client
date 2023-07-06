@@ -1,5 +1,5 @@
 import './App.css';
-import { React, useState, useEffect } from 'react';
+import { React, useState } from 'react';
 import { Route, Routes, Link } from 'react-router-dom';
 import LoginButton from './components/LoginButton';
 
@@ -14,15 +14,15 @@ import PermissionProvider from "./permissionProvider/permissionProvider";
 import Restricted from "./permissionProvider/restricted";
 
 const setEnvironment = (user) => {
-  console.warn(user)
+  //console.warn(user)
   localStorage.setItem('user',JSON.stringify(user))
   localStorage.setItem('token',user.token)
   localStorage.setItem('permissions',user.permissions.toString())
 }
 const getEnvironment = () => {
-  let envToken = localStorage.getItem('token') == undefined ? null : localStorage.getItem('token')
-  let envUser = localStorage.getItem('user') == undefined ? '{}' : localStorage.getItem('user')
-  let envPermissions = localStorage.getItem('permissions') == undefined ? '[]' : localStorage.getItem('permissions')
+  let envToken = localStorage.getItem('token') === undefined ? null : localStorage.getItem('token')
+  let envUser = localStorage.getItem('user') === undefined ? '{}' : localStorage.getItem('user')
+  let envPermissions = localStorage.getItem('permissions') === undefined ? '[]' : localStorage.getItem('permissions')
   return { token: envToken, session: JSON.parse(envUser), permissions: envPermissions }
   // 
 }
@@ -34,10 +34,7 @@ function App(props) {
   
   const [displayModal,setDisplayModal] = useState(false) // car to deretmine what to show on the Login button
   let logInfo = () => {
-    console.log("STATE:",user)
-    console.log("token:",token)
-    console.log("session:",session)
-    console.log("permissions:",permissions)
+    console.info(token,':',permissions)
   }
   let setSession = (newUser) => {
     setUser(newUser)
