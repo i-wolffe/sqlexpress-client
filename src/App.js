@@ -30,7 +30,7 @@ const getEnvironment = () => {
 function App(props) {
   const {token, session, permissions} = getEnvironment()
   const [user,setUser] = useState(
-    session === {} ?props.user : session)
+    (session === {} || session === null) ?props.user : session)
   
   const [displayModal,setDisplayModal] = useState(false) // car to deretmine what to show on the Login button
   let logInfo = () => {
