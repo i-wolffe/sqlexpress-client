@@ -13,21 +13,36 @@ import Register from './views/Register';
 import PermissionProvider from "./permissionProvider/permissionProvider";
 import Restricted from "./permissionProvider/restricted";
 
+const setEnvironment = (user) => {
+  console.warn(user)
+  localStorage.setItem('user',JSON.stringify(user))
+  localStorage.setItem('token',user.token)
+  localStorage.setItem('permissions',user.permissions.toString())
+}
+const getEnvironment = () => {
+  let envToken = localStorage.getItem('token') == undefined ? null : localStorage.getItem('token')
+  let envUser = localStorage.getItem('user') == undefined ? '{}' : localStorage.getItem('user')
+  let envPermissions = localStorage.getItem('permissions') == undefined ? '[]' : localStorage.getItem('permissions')
+  return { token: envToken, session: JSON.parse(envUser), permissions: envPermissions }
+  // 
+}
 
 function App(props) {
+  const {token, session, permissions} = getEnvironment()
   const [user,setUser] = useState(
-    props.user)
+    session === {} ?props.user : session)
+  
   const [displayModal,setDisplayModal] = useState(false) // car to deretmine what to show on the Login button
   let logInfo = () => {
     console.log("STATE:",user)
+    console.log("token:",token)
+    console.log("session:",session)
+    console.log("permissions:",permissions)
   }
-  const updateEnvironment = () => {
-    // 
+  let setSession = (newUser) => {
+    setUser(newUser)
+    setEnvironment(newUser)
   }
-  useEffect(() => {
-    console.warn(user)
-    // updateEnvironment(user)
-  },[user])
   return (
       <div className="App">
     <PermissionProvider permissions={ user !== undefined ? user.permissions : []}>
@@ -40,10 +55,10 @@ function App(props) {
           </Restricted>
           
       </header>
-      <Modal displayModal={displayModal} setDisplayModal={setDisplayModal} setUser={setUser}/>
+      <Modal displayModal={displayModal} setDisplayModal={setDisplayModal} setUser={setSession}/>
       <Routes>
         <Route  path="/" element={<Home user={user}/>} />
-        <Route  path="/login" element={<Login setUser={setUser} />} />
+        <Route  path="/login" element={<Login setUser={setSession} />} />
         <Route  path="/register" element={<Register />} />
       </Routes>
     </PermissionProvider>
