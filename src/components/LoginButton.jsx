@@ -13,7 +13,7 @@ const LoginButton = (props) => {
       </div>
     : 
       <div>
-        <Link to="/login"><span className="Login-btn">Log in</span></Link>
+        <Link exact to="login"><span className="Login-btn">Log in</span></Link>
       </div>
   )
 }

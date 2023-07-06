@@ -221,7 +221,7 @@ export class Register extends Component {
         <h2>Create User</h2>
         <div >
           <form className="login-card" action="">
-            {this.state.navigate ?  <Navigate to="/" replace={true} />  : null }
+            {this.state.navigate ?  <Navigate exact to="/" replace={true} />  : null }
             <div>
               <label htmlFor="name-input" id="name-label">Name:</label>
               <input onClick={selectAll} type="name" id="name-input"  placeholder="John..."
