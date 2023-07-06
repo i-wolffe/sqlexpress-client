@@ -2,15 +2,42 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import { BrowserRouter } from 'react-router-dom'
+import { createHashRouter, RouterProvider } from 'react-router-dom'
 import reportWebVitals from './reportWebVitals';
+import Home from './views/Home';
+import Login from './views/Login';
+import Register from './views/Register';
+
+const user = {
+  name: '',
+  access: '',
+  token: '',
+  permissions: []
+}
+
+const router = createHashRouter([
+  {
+    path: "/",
+    element: <App user={user}/> 
+  },
+  {
+    path: "/home",
+    element: <Home />
+  },
+  {
+    path: "/login",
+    element: <Login />
+  },
+  {
+    path: "/register",
+    element: <Register />
+  },
+])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <RouterProvider router={router}/>
   </React.StrictMode>
 );
 

@@ -13,13 +13,9 @@ import PermissionProvider from "./permissionProvider/permissionProvider";
 import Restricted from "./permissionProvider/restricted";
 
 
-function App() {
-  const [user,setUser] = useState({
-    name: '',
-    access: '',
-    token: '',
-    permissions: []
-  })
+function App(props) {
+  const [user,setUser] = useState(
+    props.user)
   const [displayModal,setDisplayModal] = useState(false) // car to deretmine what to show on the Login button
   let logInfo = () => {
     console.log("STATE:",user)
@@ -28,12 +24,12 @@ function App() {
     // 
   }
   useEffect(() => {
-    console.log(user)
+    console.warn(user)
     updateEnvironment(user)
   },[user])
   return (
-    <div className="App">
-    <PermissionProvider permissions={user.permissions}>
+      <div className="App">
+    <PermissionProvider permissions={ user !== undefined ? user.permissions : []}>
       <header className='App-header'>
         <Link to="/" ><h1 onClick={logInfo}>Application</h1></Link>
           <LoginButton user={user} setDisplayModal={setDisplayModal} />
@@ -46,8 +42,8 @@ function App() {
       <Modal displayModal={displayModal} setDisplayModal={setDisplayModal} setUser={setUser}/>
       <Routes>
         <Route exact path="/" element={<Home user={user}/>} />
-        <Route exact path="login" element={<Login setUser={setUser} />} />
-        <Route exact path="register" element={<Register />} />
+        <Route exact path="/login" element={<Login setUser={setUser} />} />
+        <Route exact path="/register" element={<Register />} />
       </Routes>
     </PermissionProvider>
     </div>
