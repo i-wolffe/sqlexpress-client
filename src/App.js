@@ -1,13 +1,14 @@
-import {React, useState, useEffect } from 'react';
-import { Route, Routes, Link } from 'react-router-dom';
 import './App.css';
+import { React, useState, useEffect } from 'react';
+import { Route, Routes, Link } from 'react-router-dom';
 import LoginButton from './components/LoginButton';
+
 import RegisterButton from './components/RegisterButton';
+import Modal from './components/Modal';
 
 import Login from './views/Login';
 import Home from './views/Home';
 import Register from './views/Register';
-import Modal from './components/Modal';
 
 import PermissionProvider from "./permissionProvider/permissionProvider";
 import Restricted from "./permissionProvider/restricted";
@@ -25,7 +26,7 @@ function App(props) {
   }
   useEffect(() => {
     console.warn(user)
-    updateEnvironment(user)
+    // updateEnvironment(user)
   },[user])
   return (
       <div className="App">
@@ -41,9 +42,9 @@ function App(props) {
       </header>
       <Modal displayModal={displayModal} setDisplayModal={setDisplayModal} setUser={setUser}/>
       <Routes>
-        <Route exact path="/" element={<Home user={user}/>} />
-        <Route exact path="/login" element={<Login setUser={setUser} />} />
-        <Route exact path="/register" element={<Register />} />
+        <Route  path="/" element={<Home user={user}/>} />
+        <Route  path="/login" element={<Login setUser={setUser} />} />
+        <Route  path="/register" element={<Register />} />
       </Routes>
     </PermissionProvider>
     </div>

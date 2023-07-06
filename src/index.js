@@ -4,9 +4,6 @@ import './index.css';
 import App from './App';
 import { createHashRouter, RouterProvider } from 'react-router-dom'
 import reportWebVitals from './reportWebVitals';
-import Home from './views/Home';
-import Login from './views/Login';
-import Register from './views/Register';
 
 const user = {
   name: '',
@@ -17,22 +14,10 @@ const user = {
 
 const router = createHashRouter([
   {
-    path: "/",
-    element: <App user={user}/> 
-  },
-  {
-    path: "/home",
-    element: <Home />
-  },
-  {
-    path: "/login",
-    element: <Login />
-  },
-  {
-    path: "/register",
-    element: <Register />
-  },
-])
+    path: "/*",
+    element: <App user={user} />,
+  }
+]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
