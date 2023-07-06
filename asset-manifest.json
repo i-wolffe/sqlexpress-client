@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/sqlexpress-client/static/css/main.706569fc.css",
-    "main.js": "/sqlexpress-client/static/js/main.510b4a34.js",
+    "main.js": "/sqlexpress-client/static/js/main.6cbe54c6.js",
     "static/js/787.c4e7f8f9.chunk.js": "/sqlexpress-client/static/js/787.c4e7f8f9.chunk.js",
     "static/media/test_plot.png": "/sqlexpress-client/static/media/test_plot.52270c933f17a1796036.png",
     "index.html": "/sqlexpress-client/index.html",
     "main.706569fc.css.map": "/sqlexpress-client/static/css/main.706569fc.css.map",
-    "main.510b4a34.js.map": "/sqlexpress-client/static/js/main.510b4a34.js.map",
+    "main.6cbe54c6.js.map": "/sqlexpress-client/static/js/main.6cbe54c6.js.map",
     "787.c4e7f8f9.chunk.js.map": "/sqlexpress-client/static/js/787.c4e7f8f9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.706569fc.css",
-    "static/js/main.510b4a34.js"
+    "static/js/main.6cbe54c6.js"
   ]
 }
